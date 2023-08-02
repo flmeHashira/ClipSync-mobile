@@ -13,11 +13,13 @@ import {
     TextInput,
     TouchableNativeFeedback,
     SafeAreaView,
-  SafeAreaProvider
+  SafeAreaProvider,
+  Appearance
   } from 'react-native';
 
 
 const App = () => {
+    Appearance.setColorScheme('light')
     return (
     <AppProvider id={'clip-sync-ehley'}>
         <UserProvider fallback={LogIn}>

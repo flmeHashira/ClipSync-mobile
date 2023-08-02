@@ -4,11 +4,7 @@ import {
   Text,
   View,
   Image,
-  TextInput,
   TouchableNativeFeedback,
-  SafeAreaView,
-  SafeAreaProvider,
-  ScrollView
 } from 'react-native';
 
 const Card = (props) => {
@@ -34,7 +30,6 @@ const Card = (props) => {
 const getWidth = (ratio) => {
     if (ratio < 0.75) {
         return '100%'
-
     }
     if (ratio > 1.4) {
         return '100%'
@@ -43,18 +38,13 @@ const getWidth = (ratio) => {
 
 const CardImg = (props) => {
     const [ratio, setRatio] = useState(0)
-    const width = useRef(0)
-    console.log(ratio)
     Image.getSize(props.value, (w, h) => {
-        width.current = w
         setRatio(w/h)
-    });
+    })
 
     return (
-            <Image style={{...styles.image, width: getWidth(ratio)}} source={{uri:props.value}} resizeMode='stretch'/>
+        <Image style={{...styles.image, width: getWidth(ratio)}} source={{uri:props.value}} resizeMode='stretch'/>
     )
-
-
 }
 
 const styles = StyleSheet.create({

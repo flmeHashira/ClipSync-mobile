@@ -5,8 +5,7 @@ import {
   View,
   TextInput,
   TouchableNativeFeedback,
-  SafeAreaView,
-  SafeAreaProvider
+
 } from 'react-native';
 
 import LinearGradient from 'react-native-linear-gradient'
@@ -17,24 +16,16 @@ import {useApp} from '@realm/react';
 
 const Btn = (props) => {
   return (
-    <TouchableNativeFeedback
-          onPress={props.handleClick}
-          background={
-            Platform.OS === 'android'
-              ? TouchableNativeFeedback.SelectableBackground()
-              : undefined
-          }>
-          <View style = {{  backgroundColor: '#FF4B2B',
-                            padding: 10,
-                            borderRadius: 20,
-                            height: '15%',
-                            width: '60%',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            marginTop: 20}} >
-            <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 12}}>LOG IN</Text>
-          </View>
-        </TouchableNativeFeedback >
+  <TouchableNativeFeedback
+    onPress={props.handleClick}
+    background={
+    Platform.OS === 'android' ? 
+      TouchableNativeFeedback.SelectableBackground()  : undefined
+    }>
+    <View style = {styles.button}>
+        <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 12}}>LOG IN</Text>
+    </View>
+  </TouchableNativeFeedback >
   )
 }
 
@@ -75,6 +66,7 @@ const LogIn = () => {
     //       style={styles.linearGradient}
     //       start={{ x: 0, y: 0 }}
     //       end={{ x: 1, y: 1 }}>
+    <View style={styles.background}>
       <View style={styles.loginDiv}>
         <Text style={styles.Header}>{toggleLogin ? 'Login' : 'Welcome!'}</Text>
         {errorMessage && <Text style={styles.errorMessage}>Incorrect username or password</Text>}
@@ -93,6 +85,7 @@ const LogIn = () => {
             />
         <Btn handleClick = {handleClick}/>
     </View>
+    </View>
     // </LinearGradient>
   )
 }
@@ -100,6 +93,11 @@ const LogIn = () => {
 const styles = StyleSheet.create({
   linearGradient: {
     flex: 1,
+  },
+  background: {
+    height: '100%',
+    flex: 1,
+    backgroundColor: '#f7f8fa',
   },
   Header: {
     fontWeight: 'bold',
@@ -132,6 +130,16 @@ const styles = StyleSheet.create({
     padding: 12,
     margin: 8,
     width: '90%'
+  },
+  button: {
+    backgroundColor: '#FF4B2B',
+    padding: 10,
+    borderRadius: 20,
+    height: '10%',
+    width: '50%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: '70%'
   }
 });
 
