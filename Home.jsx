@@ -31,19 +31,19 @@ const renderFooter = () => {
 const Home = () => {
     const user = useUser()
     const realm = useRealm()
-    const query = useQuery(clipContent)
+    const query = useQuery(clipContent).filtered("owner_id == $0", user.id)
     useEffect(() => {
         realm.subscriptions.update(mutableSubs => {
           // Create subscription for filtered results.
-          mutableSubs.add(query.filtered("owner_id == $0", user.id))
+          mutableSubs.add(query)
         });
       }, []);
+
 
     const collection = useMemo(() => (query.filtered("owner_id == $0", user.id)), [query])
     function renderItem({item}) {
       return <Card isText={ item.type=='text'? true : false} value={item.value}/>
     }
-
     return (
       <View style={styles.background}>
         <FlatList
@@ -58,8 +58,8 @@ const Home = () => {
           data = {collection}
           renderItem = {renderItem}
           keyExtractor = {item => item._id}
-          ListFooterComponent={renderFooter}
-          onEndReachedThreshold={0.5}
+          // ListFooterComponent={renderFooter}
+          // onEndReachedThreshold={0.5}
           />
           {/* <ScrollView>
             {collection.map(item =>  (
