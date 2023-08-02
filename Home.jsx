@@ -1,8 +1,10 @@
-import React, { useState, useEffect, useRef, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import {
   StyleSheet,
   View,
   FlatList,
+  ScrollView,
+  ActivityIndicator
 } from 'react-native';
 
 import Card from './Card'
@@ -10,6 +12,20 @@ import Card from './Card'
 import realmContext, {clipContent} from './RealmAPIs'
 const { useRealm, useQuery } = realmContext
 import { useUser } from '@realm/react'
+
+
+const renderFooter = () => {
+  return (
+    // Footer View with Loader
+    <View style={styles.footer}>
+      {loading ? (
+        <ActivityIndicator
+          color="black"
+          style={{margin: 15}} />
+      ) : null}
+    </View>
+  );
+};
 
 
 const Home = () => {
@@ -24,23 +40,34 @@ const Home = () => {
       }, []);
 
     const collection = useMemo(() => (query.filtered("owner_id == $0", user.id)), [query])
-    renderItem= ({ item }) => (<Card isText={ item.type=='text'? true : false} value={item.value}/>)
+    function renderItem({item}) {
+      return <Card isText={ item.type=='text'? true : false} value={item.value}/>
+    }
 
     return (
       <View style={styles.background}>
         <FlatList
-          showsVerticalScrollIndicator={false}
+          showsVerticalScrollIndicator = {false}
           numColumns={2}
-          columnWrapperStyle={{
+          columnWrapperStyle = {{
               flex:1,
               flexWrap: 'wrap',
               alignItems: 'flex-start',
               justifyContent: 'center',
               flexDirection: 'row'}}
-          renderItem={renderItem}
-          data={collection}
-          keyExtractor={item => item._id}
+          data = {collection}
+          renderItem = {renderItem}
+          keyExtractor = {item => item._id}
+          ListFooterComponent={renderFooter}
+          onEndReachedThreshold={0.5}
           />
+          {/* <ScrollView>
+            {collection.map(item =>  (
+                <Card key={item._id} isText={item.type==='text' ? true: false} value={item.value}/>
+              )
+            )}
+          </ScrollView> */}
+
       </View>
 
     )
@@ -56,9 +83,13 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     justifyContent: 'center',
     flexDirection: 'row'
+  },
+  footer: {
+    padding: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
   }
 })
 
-
-
-export default Home
+export default React.memo(Home)

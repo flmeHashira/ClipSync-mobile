@@ -7,14 +7,12 @@ import {
   TouchableNativeFeedback,
 } from 'react-native';
 
+import FastImage from 'react-native-fast-image'
+
 const Card = (props) => {
     return (
         <TouchableNativeFeedback
-          background={
-            Platform.OS === 'android'
-              ? TouchableNativeFeedback.SelectableBackground()
-              : undefined
-          }>
+          background={ TouchableNativeFeedback.SelectableBackground()}>
         {props.isText ? <View style={styles.cardWrapperText}>
                             <Text numberOfLines={7} ellipsizeMode='tail' style={{padding:10}} >{props.value}</Text>
                         </View>
@@ -27,23 +25,15 @@ const Card = (props) => {
     )
 }
 
-const getWidth = (ratio) => {
-    if (ratio < 0.75) {
-        return '100%'
-    }
-    if (ratio > 1.4) {
-        return '100%'
-    }
-}
-
 const CardImg = (props) => {
-    const [ratio, setRatio] = useState(0)
-    Image.getSize(props.value, (w, h) => {
-        setRatio(w/h)
-    })
-
     return (
-        <Image style={{...styles.image, width: getWidth(ratio)}} source={{uri:props.value}} resizeMode='stretch'/>
+        <FastImage
+        style={styles.image}
+        source={{
+            uri: props.value,
+            priority: FastImage.priority.normal,
+        }}
+        resizeMode={FastImage.resizeMode.stretch}/>
     )
 }
 

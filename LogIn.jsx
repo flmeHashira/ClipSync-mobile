@@ -18,10 +18,7 @@ const Btn = (props) => {
   return (
   <TouchableNativeFeedback
     onPress={props.handleClick}
-    background={
-    Platform.OS === 'android' ? 
-      TouchableNativeFeedback.SelectableBackground()  : undefined
-    }>
+    background={TouchableNativeFeedback.SelectableBackground()}>
     <View style = {styles.button}>
         <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 12}}>LOG IN</Text>
     </View>
