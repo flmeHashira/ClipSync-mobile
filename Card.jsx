@@ -1,74 +1,46 @@
-import React, { useState, useRef }from 'react';
+import React, { useState }from 'react';
 import {
   StyleSheet,
   Text,
   View,
-  Image,
-  TouchableNativeFeedback,
-  TouchableOpacity,
   Pressable
 } from 'react-native';
 
-import FastImage from 'react-native-fast-image'
+import Image from 'react-native-scalable-image'
+import * as Clipboard from 'expo-clipboard'
 
 const Card = (props) => {
+    function handlePress() {
+        if(props.isText)
+            Clipboard.setStringAsync(props.value)
+        else    {
+            const base64 = props.value.split(';base64,')[1]
+            Clipboard.setImageAsync(base64)
+        }
+    }
     return (
         <View style={{borderRadius: 20, overflow: 'hidden', margin: 15}}>
 
             <Pressable 
-            android_ripple={{ borderless:false, foreground:true}}>
+            android_ripple={{ borderless:false, foreground:true}}
+            onPress={ handlePress }>
             {props.isText ? <View style={styles.cardWrapperText}>
                                 <Text numberOfLines={7} ellipsizeMode='tail' style={{padding:10}} >{props.value}</Text>
                             </View>
                         :
                             <View style={styles.cardWrapperImg}>
-                                <CardImg value={props.value} />
+                                <Image width={150} source={{uri: props.value}} />
                             </View>
             }
             </Pressable>
         </View>
     )
-
-    // return (
-    //     <TouchableOpacity>
-    //     {props.isText ? <ScrollView style={styles.cardWrapperText}>
-    //                         <Text numberOfLines={7} ellipsizeMode='tail' style={{padding:10}} >{props.value}</Text>
-    //                     </ScrollView>
-    //                  :
-    //                     <ScrollView style={styles.cardWrapperImg}>
-    //                         <CardImg value={props.value} />
-    //                     </ScrollView>
-    //     }
-    //     </TouchableOpacity>
-    // )
-}
-function getWidth(ratio)    {
-    if(ratio>1.4)
-        return 150
-    else if(ratio<0.75)
-        return 300
-}
-
-const CardImg = (props) => {
-    const [ratio, setRatio] = useState(0)
-    Image.getSize(props.value, (w, h) => {
-        setRatio(w/h)
-    })
-
-    return (
-        <FastImage
-        style={{width:getWidth(ratio), aspectRatio: ratio}}
-        source={{
-            uri: props.value,
-            priority: FastImage.priority.normal,
-        }}
-        resizeMode={FastImage.resizeMode.stretch}/>
-    )
 }
 
 const styles = StyleSheet.create({
     image: {
-        // height: 200,
+        width: 150,
+        height: 150,
     },
     cardWrapperText: {
         width: 150,
@@ -79,7 +51,6 @@ const styles = StyleSheet.create({
 
     },
     cardWrapperImg: {
-        width: '35%',
         backgroundColor: '#ebedee',
         // margin: 15,
         // borderRadius: 20,

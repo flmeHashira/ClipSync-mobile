@@ -12,12 +12,14 @@
   "dependencies": {
     "@react-native/metro-config": "^0.72.9",
     "@realm/react": "^0.5.1",
+    "expo": "^49.0.0",
+    "expo-constants": "~14.4.2",
     "metro": "^0.77.0",
     "metro-core": "^0.77.0",
     "react": "^18.2.0",
     "react-native": "^0.72.3",
-    "react-native-fast-image": "^8.6.3",
-    "react-native-linear-gradient": "^2.8.1",
-    "realm": "^11.10.1"
+    "react-native-scalable-image": "^1.1.0",
+    "realm": "^11.10.1",
+    "expo-clipboard": "~4.3.0"
   }
 }

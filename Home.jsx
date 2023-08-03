@@ -3,7 +3,6 @@ import {
   StyleSheet,
   View,
   FlatList,
-  ScrollView,
   ActivityIndicator
 } from 'react-native';
 
@@ -29,6 +28,7 @@ const renderFooter = () => {
 
 
 const Home = () => {
+
     const user = useUser()
     const realm = useRealm()
     const query = useQuery(clipContent).filtered("owner_id == $0", user.id)
@@ -92,4 +92,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default React.memo(Home)
+export default Home

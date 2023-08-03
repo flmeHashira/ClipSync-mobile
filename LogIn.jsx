@@ -5,10 +5,9 @@ import {
   View,
   TextInput,
   TouchableNativeFeedback,
+  Pressable
 
 } from 'react-native';
-
-import LinearGradient from 'react-native-linear-gradient'
 
 import {useApp} from '@realm/react';
 
@@ -16,13 +15,31 @@ import {useApp} from '@realm/react';
 
 const Btn = (props) => {
   return (
-  <TouchableNativeFeedback
-    onPress={props.handleClick}
-    background={TouchableNativeFeedback.SelectableBackground()}>
-    <View style = {styles.button}>
+    // <View style={{borderRadius: 20, overflow: 'hidden'}}>
+    //   <Pressable 
+    //   android_ripple={{ borderless:false, foreground:true}}
+    //   onPress={props.handleClick}>
+    //     <View style = {styles.button}>
+    //         <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 12}}>LOG IN</Text>
+    //     </View>
+    //   </Pressable>
+    // </View>
+    <View style={styles.container}>
+      <Pressable
+        onPress={props.handleClick}
+        android_ripple={{ color: '#00000030', borderless: false }}
+        style={({ pressed }) => [
+          {
+            backgroundColor: pressed ? '#3498db30' : '#FF4B2B',
+          },
+          styles.button,
+        ]}
+      >
+        {/* <View style={{height: 30, width: 70,}}> */}
         <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 12}}>LOG IN</Text>
+        {/* </View> */}
+      </Pressable>
     </View>
-  </TouchableNativeFeedback >
   )
 }
 
@@ -128,16 +145,30 @@ const styles = StyleSheet.create({
     margin: 8,
     width: '90%'
   },
-  button: {
-    backgroundColor: '#FF4B2B',
-    padding: 10,
+  // button: {
+  //   backgroundColor: '#FF4B2B',
+  //   padding: 10,
+  //   height: '10%',
+  //   width: '50%',
+  //   alignItems: 'center',
+  //   justifyContent: 'center',
+  //   marginTop: '70%'
+  // },
+
+  container: {
+    marginTop: 200,
+    overflow: 'hidden',
     borderRadius: 20,
-    height: '10%',
-    width: '50%',
+  },
+  button: {
+    // backgroundColor: '#FF4B2B'
+    paddingVertical: 10,
+    paddingHorizontal: 20,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: '70%'
-  }
+    width: 150,
+    height: 50,
+  },
 });
 
 export default LogIn;
