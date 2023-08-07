@@ -6,9 +6,8 @@ export class clipContent extends Realm.Object {
         return {
           owner_id,  
           _id: new UUID(),
-          description,
-          isComplete: false,
-          createdAt: new Date(),
+          type,
+          value
         };
       }
 

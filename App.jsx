@@ -1,30 +1,21 @@
 import React, { useState } from 'react'
-import LogIn from './LogIn'
-import Home from './Home'
+import Auth from './components/Auth'
+import Home from './components/Home'
 import realmContext from './RealmAPIs'
 import {UserProvider, AppProvider} from '@realm/react';
+import Loading from './components/Loading'
 
 const {RealmProvider} = realmContext;
 
-import {
-    StyleSheet,
-    Text,
-    View,
-    TextInput,
-    TouchableNativeFeedback,
-    SafeAreaView,
-  SafeAreaProvider,
-  Appearance
-  } from 'react-native';
+import { Appearance } from 'react-native';
 
 
 const App = () => {
     Appearance.setColorScheme('light')
     return (
     <AppProvider id={'clip-sync-ehley'}>
-        <UserProvider fallback={LogIn}>
-            <RealmProvider
-                // fallback={<Loading/>} 
+        <UserProvider fallback={Auth}>
+            <RealmProvider  fallback={<Loading/>} 
                 sync={{
                     flexible: true,
                     onError: console.error}}>
